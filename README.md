@@ -32,22 +32,20 @@ cp .env.example .env
 ```
 Update the .env file with your database credentials and other configuration details.
 
-Install dependencies:
+start docker desktop
 
-bash
-Copy code
-composer install
-Run database migrations:
+start the containers:
+```bash
+docker-compose up --build -d
+```
 
-bash
-Copy code
-php artisan migrate
-Start the development server:
+seed the database:
+```bash
+docker exec shift-manager-web-1 php seeder.php 
+```
 
-bash
-Copy code
-php artisan serve
-The application will be accessible at http://localhost:8000.
+The application will be accessible at http://localhost:80.
+Phpmyadmin will be accessible at http://localhost:8080.
 
 Usage
 Access the application in your web browser.
