@@ -31,7 +31,6 @@ services:
     depends_on:
       - db
     environment:
-      - SEED=false
       - HOST=${HOST} 
       - DB_USERNAME=${DB_USERNAME} 
       - DB_PASSWORD=${DB_PASSWORD} 
