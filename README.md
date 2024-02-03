@@ -55,5 +55,5 @@ Phpmyadmin will be accessible at http://localhost:8080.
 
 Usage
 Access the application in your web browser.
-Log in as an admin or an employee using the provided credentials.
+Log in as an admin or an employee using the provided credentials (defaults are admin, pasword) set in the .env file.
 Explore the shift creation, assignment, and user request functionalities.
