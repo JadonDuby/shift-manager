@@ -42,8 +42,8 @@
     function createShift() {
         const startTime = $('#shiftStartTime').val();
         const endTime = $('#shiftEndTime').val();
-        const id = $('#id').val();
-        console.log(id);
+        // const id = $('#id').val();
+        // console.log(id);
         $.ajax({
             type: 'POST',
             url: 'ajax_handler.php', // Update with your actual PHP endpoint
@@ -51,7 +51,7 @@
                 action: 'createShift',
                 start_time: startTime,
                 end_time: endTime,
-                id: id
+                // id: id
             },
             success: function(response) {
             console.log(response);
@@ -174,7 +174,7 @@
                 <p>username: ${shift[2]}</p>
                 <p>Start Time: ${shift[3]}</p>
                 <p>End Time: ${shift[4]}</p>
-                <p>State: ${shift[5]}<p>
+                <p>status: ${shift[5]}<p>
                 </button>
             `;
 

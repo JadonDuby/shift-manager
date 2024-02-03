@@ -18,7 +18,7 @@ class AuthService {
         $username = $this->db->connection->real_escape_string($username);
 		$password = $this->db->connection->real_escape_string($password);
         $passwordHash = password_hash($password, PASSWORD_BCRYPT);
-        $sql = "SELECT id, username, hashed_password, role FROM users WHERE username = ?";
+        $sql = "SELECT id, username, hashed_password, role FROM user WHERE username = ?";
         $stmt = $this->db->connection->prepare($sql);
         $stmt->bind_param('s', $username);
         $stmt->execute();

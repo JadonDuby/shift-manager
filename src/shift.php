@@ -138,8 +138,7 @@ class ShiftHandler
     public $userId;
     private $shiftId;
 
-    public function __construct($shiftId = Null, $status=Null, $isAdmin=True, $pickupUserId=Null, $dropUserId=Null){
-        echo $state;
+    public function __construct($shiftId = Null, $status=Null, $isAdmin=True, $userId=Null, $pickupUserId=Null, $dropUserId=Null){
         $this->userId = $userId;
         $this->shiftId = $shiftId;
         $this->isAdmin = $isAdmin;
@@ -208,10 +207,10 @@ class ShiftHandler
 
 // Example usage
 // $user = new User(1, "a", "a", "ADMIN");
-// $shift = new ShiftHandler(1);
+$shift = new ShiftHandler(status: "UNASSIGNED");
 
 // $shift->assign(123);   // Output: Shift assigned to user with ID 123.
-// $shift->getState();
+$shift->getState();
 // $shift->getUserId();
 // $shift->requestCoverage();
 // $shift->requestShift(321);

@@ -7,15 +7,15 @@ include("databaseConnection.php");
 $db = new DatabaseConnection(HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $action = $_POST['action'];
-    $shift_id = $_POST['id'];
+    // $shift_id = $_POST['id'];
     // Handle different actions
     switch ($action) {
         case 'createShift':
-            $shift = new Shift();
+            $shift = new ShiftHandler(status: "UNASSIGNED");
             $state = $shift->getState();
             $user_id = $_SESSION['userid'];
             header('Content-Type: application/json');
-            echo json_encode(['success' => true, 'message' => "new shift with state $state. \n curent user id is $user_id. \n shift id is $id "]);
+            echo json_encode(['success' => true, 'message' => "new shift with state $state. \n curent user id is $user_id."]);
             break;
         case 'assignShift':
             // Handle assigning a shift
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header('Content-Type: application/json');
             echo json_encode(['success' => true, 'message' => "shift added to database"]);
         case 'getShifts';
-            $sql = "SELECT t1.id, t1.user_id, username, start_time, end_time from shift t1 left join users t2 on t1.user_id = t2.id";
+            $sql = "SELECT t1.id, t1.user_id, username, start_time, end_time, status from shift t1 left join user t2 on t1.user_id = t2.id";
             $result = $db->query($sql);
             $row = $result->fetch_all();
             header('Content-Type: application/json');

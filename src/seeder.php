@@ -10,18 +10,19 @@ $sql = "CREATE TABLE IF NOT EXISTS user (
     hashed_password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'employee') NOT NULL)";
 $db->query($sql);
-$sql = " CREATE TABLE IF NOT EXISTS shift (
+$sql = "CREATE TABLE IF NOT EXISTS shift (
     id INT AUTO_INCREMENT PRIMARY KEY,
     start_time DATETIME NOT NULL,
     end_time DATETIME NOT NULL,
     user_id INT,
-    FOREIGN KEY (user_id) REFERENCES user(id))";
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    status ENUM('ASSIGNED', 'UNASSIGNED', 'PENDING') NOT NULL)";
 $db->query($sql);
 $sql = "INSERT INTO user (id, username, hashed_password, role) VALUES
     (1, 'admin', ?, 'admin'),
     (2, 'emp1', ?, 'employee'),
     (3, 'emp2', ?, 'employee')";
-$db->query($sql, [$passwordHash, $passwordHash, $passwordHash]);
+// $db->query($sql, [$passwordHash, $passwordHash, $passwordHash]);
 $sql = "INSERT INTO shift (start_time, end_time, user_id) VALUES
     ('2024-01-01 08:00:00', '2024-01-01 16:00:00', 2),
     ('2024-01-02 12:00:00', '2024-01-02 20:00:00', 3)";
