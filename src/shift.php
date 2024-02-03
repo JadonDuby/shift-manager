@@ -6,13 +6,13 @@ include "user.php";
 
 interface ShiftState
 {
-    public function assignShift(Shift $shift, user $user);
+    public function assignShift(Shift $shift, $userId);
 
     public function unassignShift(Shift $shift);
 
-    public function requestShift(Shift $shift, user $user);
+    public function requestShift(Shift $shift, $userId);
 
-    public function requestCoverage(Shift $shift, user $user);
+    public function requestCoverage(Shift $shift, $pickupUserId, $dropUserId);
 
     public function getState();
 
@@ -32,8 +32,8 @@ class UnassignedState implements ShiftState
         return $this->state;
     }
 
-    public function assignShift(Shift $shift, user $user){
-        $shift->setState(new AssignedState($user));
+    public function assignShift(Shift $shift, $userId){
+        $shift->setState(new AssignedState($userId));
         echo "Shift assigned to user with ID $userId.\n";
     }
 
@@ -41,12 +41,12 @@ class UnassignedState implements ShiftState
         echo "shift already not assigned";
     }
 
-    public function requestShift(Shift $shift, $user){
+    public function requestShift(Shift $shift, $userId){
         echo "shift requested";
-        $shift->setState(new PendingState(null, $user));
+        $shift->setState(new PendingState(null, $userId));
     }
 
-    public function requestCoverage(Shift $shift, $user){
+    public function requestCoverage(Shift $shift, $pickupUser, $dropUserId){
         echo "cannot request coverage for unassigned shift";
     }
 
@@ -55,7 +55,6 @@ class UnassignedState implements ShiftState
 class AssignedState implements ShiftState
 {
     private $userId;
-    private user $user
     public $state;
 
     public function __construct(){
@@ -68,10 +67,9 @@ class AssignedState implements ShiftState
         return $this->state;
     }
 
-    public function assignShift(Shift $shift, $user)
+    public function assignShift(Shift $shift, $userId)
     {
-        $id = $this->user->getId();
-        echo "Shift is already assigned to user with ID $id.\n";
+        echo "Shift is already assigned to user with ID $userId.\n";
     }
 
     public function unassignShift(Shift $shift)
@@ -85,9 +83,9 @@ class AssignedState implements ShiftState
         echo "cannot request assigned shift.\n";
     }
 
-    public function requestCoverage(Shift $shift, User $drupUser, User $pickUpUser){
+    public function requestCoverage(Shift $shift, $drupUserId, $pickupUserId){
         echo "coverage requsted.\n";
-        $shift->setState(new PendingState($shift, $dropUser, $pickUpUser));
+        $shift->setState(new PendingState($shift, $dropUserId, $pickupUserId));
     }
 }
 
@@ -126,35 +124,36 @@ class PendingState implements ShiftState
         $shift->setState(new PendingState($this->dropUserId, $userId));
     }
 
-    public function requestCoverage(Shift $shift){
+    public function requestCoverage(Shift $shift, $pickupUser, $dropUserId){
         echo "cannot request coverage for pending shift.\n";
     }
 }
 
 // Context class representing a shift
 
-class Shift
+class ShiftHandler
 {
-    private $user;
+    private $isAdmin;
     private $state;
     public $userId;
     private $shiftId;
 
-    public function __construct(User $user, $shiftId = Null, $status){
+    public function __construct($shiftId = Null, $status=Null, $isAdmin=True, $pickupUserId=Null, $dropUserId=Null){
         echo $state;
+        $this->userId = $userId;
+        $this->shiftId = $shiftId;
+        $this->isAdmin = $isAdmin;
         switch($status){
             case 'ASSIGNED':
-                $this->state = new AssignedState();
+                $this->state = new AssignedState($this->userId);
                 break;
             case 'UNASSIGNED':
                 $this->state = new UnassignedState();
                 break;
             case 'PENDING':
-                $this->state = new PendingState();
+                $this->state = new PendingState($pickupUserId, $dropUserId);
                 break;
         }
-        $this->user = $user;
-        $this->shiftId = $shiftId;
     }
 
     public function getUserId(){
@@ -174,9 +173,9 @@ class Shift
         return $this->state->getState();
     }
 
-    public function assign(user $user){
-        if ($user->isAdmin()){
-            $this->setUserId($user->getId());
+    public function assign($userId){
+        if ($this->isAdmin){
+            $this->setUserId($userId->userId);
             $this->state->assignShift($this, $userId);
         }
         else{
@@ -194,7 +193,7 @@ class Shift
     }
 
     public function requestShift($userId){
-        if ($this->isAdmin){
+        if (!$this->isAdmin){
             $this->state->requestShift($this, $userId);
         }
        else{
@@ -208,11 +207,11 @@ class Shift
 }
 
 // Example usage
-$user = new User(1, "a", "a", "ADMIN");
-$shift = new Shift($user, 1);
+// $user = new User(1, "a", "a", "ADMIN");
+// $shift = new ShiftHandler(1);
 
 // $shift->assign(123);   // Output: Shift assigned to user with ID 123.
-$shift->getState();
+// $shift->getState();
 // $shift->getUserId();
 // $shift->requestCoverage();
 // $shift->requestShift(321);
