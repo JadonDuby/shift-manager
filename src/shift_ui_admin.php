@@ -142,7 +142,7 @@
                 // Handle success, update UI or show a message
                 alert(message);
                 for (row in message){
-                    console.log(row["shift_id"]);
+                    console.log(row["id"]);
                 }
                 displayShifts(message);
             } else {
