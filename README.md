@@ -39,6 +39,11 @@ start the containers:
 docker-compose up --build -d
 ```
 
+If restarting containers:
+```bash
+docker compose down && docker-compose up --build -d
+```
+
 seed the database:
 ```bash
 docker exec shift-manager-web-1 php seeder.php 
