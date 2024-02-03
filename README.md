@@ -41,13 +41,14 @@ docker-compose up --build -d
 
 If restarting containers:
 ```bash
-docker compose down && docker-compose up --build -d
+docker-compose down && docker-compose up --build -d
 ```
 
 seed the database:
 ```bash
 docker exec shift-manager-web-1 php seeder.php 
 ```
+You will only need to seed the database the first time running the application, or if you delete the database or schema.
 
 The application will be accessible at http://localhost:80.
 Phpmyadmin will be accessible at http://localhost:8080.
