@@ -22,7 +22,7 @@ $sql = "INSERT INTO user (id, username, hashed_password, role) VALUES
     (1, 'admin', ?, 'admin'),
     (2, 'emp1', ?, 'employee'),
     (3, 'emp2', ?, 'employee')";
-// $db->query($sql, [$passwordHash, $passwordHash, $passwordHash]);
+$db->query($sql, [$passwordHash, $passwordHash, $passwordHash]);
 $sql = "INSERT INTO shift (start_time, end_time, user_id) VALUES
     ('2024-01-01 08:00:00', '2024-01-01 16:00:00', 2),
     ('2024-01-02 12:00:00', '2024-01-02 20:00:00', 3)";
