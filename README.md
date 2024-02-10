@@ -1,5 +1,9 @@
 # Shift Management System
 
+Checkout out the system at shiftman.aboratech.com
+username: admin
+password: password
+## To run locally
 ## Overview
 
 The Shift Management System is a PHP-based web application that facilitates shift scheduling, assignment, and user management. It is designed to help organizations efficiently manage shifts and user assignments.
