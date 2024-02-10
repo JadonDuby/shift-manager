@@ -23,13 +23,13 @@ The Shift Management System is a PHP-based web application that facilitates shif
 
 1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/JadonDuby/shift-manager.git
-   ```
+```bash
+git clone https://github.com/JadonDuby/shift-manager.git
+```
 Navigate to the project directory:
-  ```bash
-  cd shift-manager
-  ```
+```bash
+cd shift-manager
+```
 Copy the example environment file:
 ```bash
 cp .env.example .env
@@ -50,7 +50,11 @@ docker-compose down && docker-compose up --build -d
 
 seed the database:
 ```bash
-docker exec shift-manager-web-1 php seeder.php 
+docker exec shift-manager-web-1 php seeder.php
+```
+or 
+```bash
+docker exec shift-manager_web_1 php seeder.php
 ```
 You will only need to seed the database the first time running the application, or if you delete the database or schema.
 
