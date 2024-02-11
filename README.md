@@ -1,5 +1,12 @@
 # Shift Management System
 
+
+
+https://github.com/JadonDuby/shift-manager/assets/35384406/a3b67f0a-7caa-4420-a115-1a0294799386
+
+
+
+
 Checkout out the system at shiftman.aboratech.com
 username: admin
 password: password
