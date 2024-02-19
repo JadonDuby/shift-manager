@@ -10,3 +10,4 @@ RUN docker-php-ext-install mysqli pdo_mysql
 
 # Enable Apache modules 
 RUN a2enmod rewrite
+
